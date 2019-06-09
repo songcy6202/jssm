@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package jssmpb;
+
+// TODO: add grp-gateway later
+//import "google/api/annotations.proto";
+
+message Job {
+    string id = 1;
+    int64 start_at = 2;
+    int64 finished_at = 3;
+    Status status = 4;
+    map<string,string> labels = 5;
+    string executor_id = 6;
+}
+
+enum Status {
+   PENDING = 0;
+   ASSIGNED = 1;
+   RUNNING = 2;
+   REVOKED = 3;
+   FAILURE = 4;
+   SUCCESS = 5;
+}
+
+message Executor {
+    string id = 1;
+    enum Status{
+        UNKNOWN = 0;
+        WORKING = 1;
+        DOWN = 2;
+    }
+    Status status = 2;
+}
+
+service JobService {
+    rpc CreateJob(CreateJobRequest) returns (CreateJobResponse) {};
+    rpc GetJob(GetJobRequest) returns (GetJobResponse) {};
+    rpc ScheduleJob(ScheduleJobRequest) returns (ScheduleJobResponse) {};
+};
+
+
+message CreateJobRequest{}
+message CreateJobResponse{}
+message UpdateJobRequest{}
+message UpdateJobResponse{}
+message GetJobRequest{}
+message GetJobResponse{}
+message ScheduleJobResponse{}
+message ScheduleJobRequest{}
